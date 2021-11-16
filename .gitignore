@@ -16,9 +16,6 @@ __pycache__/
 Thumbs.db
 #.git*
 
-REMS-data/*
-REMS_daily_min_max.csv
 *.out
 *.err
 *.batch
-*.csv
