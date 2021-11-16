@@ -2,7 +2,8 @@
 close all
 clear 
 clc
-
+% Need to handle volume mixing ratio
+% Add processing for other files in output folder to this script
 %% Processing for Temperature
 % Get all files in the directory
 folder = "rems_data";
