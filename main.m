@@ -91,6 +91,11 @@ saveas(f, "images/p_periodogram.png")
 [f, h_peaks_min, h_peaks_max] = periodogram_plots(h_min, h_max, 1);
 saveas(f, "images/h_periodogram.png")
 
+%% Delta T
+figure
+scatter(temperature.SOL, temperature.MAXIMUM - temperature.MINIMUM, '.')
+axis tight
+
 %% Plots After Further Cleaning
 % plot_summary(temperature, "Daily Temperature Summary");
 % plot_summary(pressure, "Daily Pressure Summary");
