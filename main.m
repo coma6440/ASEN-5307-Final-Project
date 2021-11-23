@@ -2,6 +2,10 @@
 close all
 clear
 clc
+%% TODO:
+%Correlation coefficients
+%Statistical tests for residuals
+%Start gathering results
 %%
 % A = readtable('output/WIND_DIRECTION.csv');
 % B = readtable('output/HORIZONTAL_WIND_SPEED.csv');
@@ -28,10 +32,6 @@ saveas(f, "images/h_summary_init.png")
 temperature = rmoutliers(temperature);
 pressure = rmoutliers(pressure);
 humidity = rmoutliers(humidity);
-%% Interpolation of missing values
-% temperature = interp_table(temperature,  temperature.SOL, idx);
-% pressure = interp_table(pressure,  pressure.SOL, idx);
-% humidity = interp_table(humidity,  humidity.SOL, idx);
 
 %% Fitting Fourier Series
 idx = 1:max(temperature.SOL);
@@ -39,11 +39,11 @@ idx = 1:max(temperature.SOL);
 % t_s = temperature.SOL;
 t_min = temperature.MINIMUM;
 t_max = temperature.MAXIMUM;
-% 
+ 
 % p_s = pressure.SOL;
 p_min = pressure.MINIMUM;
 p_max = pressure.MAXIMUM;
-% 
+
 % h_s = humidity.SOL;
 h_min = humidity.MINIMUM;
 h_max = humidity.MAXIMUM;

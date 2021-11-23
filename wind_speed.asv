@@ -33,11 +33,30 @@ plot(t, movmean(ws,200), 'LineWidth', 2)
 xlabel("Sol")
 ylabel("Wind Speed [m/s]")
 
-%% Polar histogram of wind direction
+%% Time Evolution of Wind Direction
+%Histogram not working well due to size of measurements, need to find way
+%to remedy. Let's try bootstrapping by sol
 G = groupsummary(h_wd, 'Var1', 'mean', 'Var5');
 figure
 hold on
 scatter(h_wd.Var1, h_wd.Var5,'.')
 axis tight
-plot(G.Var1, smooth(G.mean_Var5, 12),'LineWidth', 2)
-%Makes sense for wind-drection to be primarily coming fro
+plot(G.Var1, G.mean_Var5)
+plot(G.Var1, smooth(G.mean_Var5, 20),'LineWidth', 2)
+xlabel("Sol")
+ylabel("Wind Direction [Degree]")
+legend("Raw Data", "Sol Averaged Data", "Smoothed, Averaged Data")
+%Makes sense for wind-drection to be primarily coming from the south,
+%curiosity is located in southern hemisphere https://marsed.asu.edu/mep/wind
+%Additionally shows significant South EAST !
+
+%% Bootstrapping to get WS distribution
+out = boot_stat(h_ws);
+
+%% Helper Functions
+function out = boot_stat(tab)
+sols = unique(tab.Var1);
+for s = sols
+    dat = datasample(tab.Var5(tab.Var1 == s), 100);
+end
+end
