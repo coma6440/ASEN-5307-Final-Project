@@ -140,7 +140,3 @@ pax.ThetaTick = angles;
 labels = {'N','NE','E','SE','S','SW','W','NW'};
 pax.ThetaTickLabel = labels;
 saveas(f, "images/wd_histogram_night.png")
-%% Helper Functions
-function out = ang_mean(x)
-out = atan2(mean(sin(x)),mean(cos(x)));
-end
