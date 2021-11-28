@@ -3,7 +3,7 @@ close all
 clear 
 clc
 
-%% Labels present in data
+%% Labels present in d
 labels = ["SOL";
           "TIMESTAMP";
           "LMST";
@@ -14,19 +14,14 @@ labels = ["SOL";
           "VERTICAL_WIND_SPEED";
           "WIND_DIRECTION";
           "LOCAL_RELATIVE_HUMIDITY"];
-      
-%% Options for loading/output folders
 folder = "rems_data";
 listing = dir(folder);
 listing([listing.isdir]) = [];
 out_folder = "output";
-
-%% Pre-processing
-for i = 1:length(listing)
+for i = 51:length(listing)
     A = readmatrix(folder + filesep + listing(i).name, 'OutputType', 'string');
     temp_labels = labels;
     [r,c] = size(A);
-    %Remove blank and missing rows
     A = deblank(A);
     A(A == "") = missing;
     for j = 5:c

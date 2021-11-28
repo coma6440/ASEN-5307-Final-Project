@@ -24,16 +24,13 @@ saveas(f, "images/ws_qq.png")
 [h_wb,p_wb] = chi2gof(ws,'CDF',pd_wb);
 [h_gm,p_gm] = chi2gof(ws,'CDF',pd_gm);
 
-%Resample data with smaller sample size
+%Resample data 
 ws_bs = datasample(ws,1000);
-
-%Try tests again
 [h_nm_bs,p_nm_bs] = chi2gof(ws_bs);
 [h_wb_bs,p_wb_bs] = chi2gof(ws_bs,'CDF',pd_wb);
 [h_gm_bs,p_gm_bs] = chi2gof(ws_bs,'CDF',pd_gm);
 
-%% Plotting distribution and visualizing theoretical dists
-%Wind speeds for testing
+%% Plotting distribution and visualizing
 s_test = 0:0.1:20;
 f = figure('Visible','off');
 histogram(ws, 'Normalization', 'pdf')
@@ -57,7 +54,7 @@ ylabel("Wind Speed [m/s]")
 legend("Data", "Moving average")
 saveas(f, "images/ws_time.png")
 
-%% Get the daily time of the wind directions
+%% More Wind
 sols = h_wd.Var1;
 t_wd = h_wd.Var2;
 wd = h_wd.Var5;
@@ -73,12 +70,11 @@ else
     save('wd_time.mat', time);
 end
 
-%% Find the angular mean of wind direction for each day
+
 G = groupsummary(h_wd, 'Var1', @(x) ang_mean(x), 'Var5');
 t_mean = G.Var1;
 wd_mean = rad2deg(mod(G.fun1_Var5,2*pi));
 
-%% Plot the time series for wind direction
 f = figure('Visible','off');
 scatter(sols,wd,'.')
 axis tight
@@ -89,7 +85,6 @@ scatter(t_mean, wd_mean,'.')
 legend(["Data", "Daily Angular Mean"])
 saveas(f, "images/wd_time.png")
 
-%% Histogram of observation times
 
 f = figure('Visible','off');
 histogram(time,20)
@@ -97,9 +92,9 @@ xlabel("LMST")
 ylabel("Observations")
 axis tight
 saveas(f, "images/wd_obs_times.png")
+
 %Majority of samples taken during the day
 
-%% Polar histogram of observations
 f = figure('Visible','off');
 polarhistogram(deg2rad(wd))
 pax = gca;
@@ -117,7 +112,6 @@ t_fall = duration(hours(18));
 day = time > t_rise & time < t_fall;
 night = time < t_rise | time > t_fall;
 
-% Daytime
 f = figure('Visible','off');
 polarhistogram(deg2rad(wd(day)))
 pax = gca;
@@ -129,7 +123,6 @@ labels = {'N','NE','E','SE','S','SW','W','NW'};
 pax.ThetaTickLabel = labels;
 saveas(f, "images/wd_histogram_day.png")
 
-%Nighttime
 f = figure('Visible','off');
 polarhistogram(deg2rad(wd(night)))
 pax = gca;

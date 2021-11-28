@@ -2,20 +2,6 @@
 close all
 clear
 clc
-%% TODO:
-%Correlation coefficients
-%Statistical tests for residuals
-%Start gathering results
-% Get daily maxs/mins
-%%
-% A = readtable('output/WIND_DIRECTION.csv');
-% B = readtable('output/HORIZONTAL_WIND_SPEED.csv');
-% % figure
-% % scatter(A.Var1, A.Var5)
-% % polarhistogram(A.Var5, 'DisplayStyle', 'stairs')
-% 
-% histogram(B.Var5)
-% scatter(B.Var2, B.Var5)
 
 %% Load in the Data
 temperature = sortrows(readtable("output/temp_stats.csv", 'MissingRule', 'omitrow'));
@@ -37,15 +23,12 @@ humidity = rmoutliers(humidity);
 %% Fitting Fourier Series
 idx = 1:max(temperature.SOL);
 
-% t_s = temperature.SOL;
 t_min = temperature.MINIMUM;
 t_max = temperature.MAXIMUM;
  
-% p_s = pressure.SOL;
 p_min = pressure.MINIMUM;
 p_max = pressure.MAXIMUM;
 
-% h_s = humidity.SOL;
 h_min = humidity.MINIMUM;
 h_max = humidity.MAXIMUM;
 
@@ -113,10 +96,6 @@ ax = gca;
 ax.XDisplayLabels = tick_labels;
 ax.YDisplayLabels = tick_labels;
 saveas(f, "images/var_corr.png")
-%% Plots After Further Cleaning
-% plot_summary(temperature, "Daily Temperature Summary");
-% plot_summary(pressure, "Daily Pressure Summary");
-% plot_summary(humidity, "Daily Humidity Summary");
 %% Helper Functions
 function f = plot_summary(A)
 A = rmoutliers(A);
